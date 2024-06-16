@@ -1,0 +1,73 @@
+const colors = {
+    'main': {
+        color1: '#a2a2fa',
+        color2: '#eef',
+        color3: '#ffffff',
+        color4: '#9292ea',
+        color5: '#f2f2ff',
+        color6: '#8282ea',
+        color7: '#6262ea',
+        color8: '#2b2a29',
+        color9: '#6646ee',
+        color10: '#ccf',
+        color11: '#bbf',
+    },
+    'main': {
+        color1: '#a2a2fa',
+        color2: '#eef',
+        color3: '#ffffff',
+        color4: '#9292ea',
+        color5: '#f2f2ff',
+        color6: '#8282ea',
+        color7: '#6262ea',
+        color8: '#2b2a29',
+        color9: '#6646ee',
+        color10: '#ccf',
+        color11: '#bbf',
+        color12: '#00f'
+    },
+    'dark': {
+        color1: '#4444',
+        color2: '#222',
+        color3: '#eeeeee',
+        color4: '#ccc',
+        color5: '#2f2f2f',
+        color6: '#ccc',
+        color7: '#fff',
+        color8: '#aaa',
+        color9: '#6646ee',
+        color10: '#ccf',
+        color11: '#bbf',
+        color12: '#000'
+
+    },
+    'forest': {
+        color1: '#5f6344',
+        color2: '#795b47',
+        color3: '#cccccc',
+        color4: '#bbb',
+        color5: '#896b57',
+        color6: '#ccc',
+        color7: '#ddd',
+        color8: '#ababab',
+        color9: '#6646ee',
+        color10: '#ccf',
+        color11: '#bbf',
+        color12: '#492b17'
+    },
+    'beach': {
+        color1: '#bbdbf7',
+        color2: '#f6e3d4',
+        color3: '#448bb3',
+        color4: '#549bc3',
+        color5: '#f0dbce',
+        color6: '#448bb3',
+        color7: '#448bb3',
+        color8: '#ababab',
+        color9: '#6646ee',
+        color10: '#ccf',
+        color11: '#bbf',
+        color12: '#000'
+    },
+}
+export default colors;
