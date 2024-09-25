@@ -1,4 +1,5 @@
 import React from "react";
+import {Image, Text, TouchableOpacity, View,} from "react-native";
 import colors from "./styles";
 import {useSelector} from "react-redux";
 
@@ -7,7 +8,7 @@ const HeaderChat = ({
                         onPress2,
                         onPress3,
                         onPress4,
-                        p = "screen",
+                        text = "screen",
                         screen = "",
                         color = "#AAAAAA",
                     }) => {
@@ -15,7 +16,7 @@ const HeaderChat = ({
     const count = useSelector((state) => state.chats.count);
 
     return (
-        <div
+        <View
             style={{
                 width: "100%",
                 height: 60,
@@ -32,11 +33,11 @@ const HeaderChat = ({
                 shadowRadius: 20,
             }}
         >
-            <div
+            <TouchableOpacity
                 onPress={onPress}
                 style={{flexDirection: "row", justifyContent: "flex-start"}}
             >
-                <Img
+                <Image
                     key='logo'
                     source={require("../icons/logo.png")}
                     resizeMode="cover"
@@ -48,8 +49,8 @@ const HeaderChat = ({
                         marginLeft: 10,
                     }}
                 />
-            </div>
-            <div
+            </TouchableOpacity>
+            <View
                 style={{
                     flexDirection: "column",
                     justifyContent: "center",
@@ -59,7 +60,7 @@ const HeaderChat = ({
                     width: '57%'
                 }}
             >
-                <p
+                <Text
                     numberOfLines={1}
                     style={{
                         color: colors[theme].color3,
@@ -71,12 +72,12 @@ const HeaderChat = ({
                         overflow: "hidden",
                     }}
                 >
-                    {p}
-                </p>
-            </div>
-            <div style={{flexDirection: "row"}}>
+                    {text}
+                </Text>
+            </View>
+            <View style={{flexDirection: "row"}}>
                 {screen !== "Call" && (
-                    <div
+                    <TouchableOpacity
                         onPress={onPress2}
                         style={{
                             flexDirection: "row",
@@ -84,7 +85,7 @@ const HeaderChat = ({
                             justifyContent: "flex-start",
                         }}
                     >
-                        <Img
+                        <Image
                             key='call'
 
                             source={require("../icons/call.png")}
@@ -96,9 +97,9 @@ const HeaderChat = ({
                                 alignSelf: "center",
                             }}
                         />
-                    </div>
+                    </TouchableOpacity>
                 )}
-                <div
+                <TouchableOpacity
                     onPress={onPress4}
                     style={{
                         flexDirection: "row",
@@ -106,7 +107,7 @@ const HeaderChat = ({
                         justifyContent: "flex-start",
                     }}
                 >
-                    <Img
+                    <Image
                         key='menu'
 
                         source={require("../icons/menu.png")}
@@ -118,9 +119,9 @@ const HeaderChat = ({
                             alignSelf: "center",
                         }}
                     />
-                </div>
-            </div>
-        </div>
+                </TouchableOpacity>
+            </View>
+        </View>
     );
 };
 

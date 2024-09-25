@@ -11,11 +11,15 @@ import {
   is_user_exist,
   sign_up,
 } from "../../api/userApi";
-import { clearUser, saveUser } from "../../redux/actions/usrActions";
+import {clearUser, saveUser, set_JWT} from '../../redux/actions/usrActions';
+import { useNavigate } from "react-router-dom";
+import { Image } from "react-native"
+import Resizer from "react-image-file-resizer";
 
-function Auth({ navigation }) {
+function Auth() {
   const width = 300;
   const height = 720;
+  const navigation = useNavigate();
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.usr);
@@ -35,35 +39,34 @@ function Auth({ navigation }) {
   const [err2, setErr2] = useState("");
   const [type, setType] = useState("default");
   const selectFile = () => {
-    var options = {
-      title: "Select Image",
-      customButtons: [
-        {
-          name: "customOptionKey",
-          title: "Choose file from Custom Option",
-        },
-      ],
-      storageOptions: {
-        skipBackup: true,
-        path: "images",
-      },
-    };
-    /*
-        ImagePicker.launchImageLibrary(options, async (res) => {
-            if (!res["assets"][0]) {
-                return;
-            }
+    document.getElementById("selectImage").click();
+  };
 
-            setResponse(res);
-            const result = await Image.compress(res.assets[0]["uri"], {
-                maxWidth: 300,
-                maxHeight: 300,
-                quality: 0.3,
-                returnableOutputType: "base64",
-            });
-            setPhoto(`data:image/jpeg;base64,${result}`);
-        });
-        */
+  const resizeFile = (file) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        file,
+        300,
+        300,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "base64"
+      );
+    });
+
+  const processFile = async (event) => {
+    try {
+      const file = event.target.files[0];
+      const image = await resizeFile(file);
+      setResponse({ assets: [{ uri: image }] });
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
   const inputRange = [0, 1, 2];
   const outputRange = ["0%", "28%", "100%"];
@@ -86,22 +89,24 @@ function Auth({ navigation }) {
       is_user_exist({ _id: user._id })
         .then((res) => {
           setLoading(false);
-          return navigation.replace("Main");
+          return navigation("/main");
         })
         .catch((err) => {
+          console.log(err)
           if (!err.response) {
             console.log("redo");
             return setRedo(!redo);
           }
-          if (err.response.status == 400) {
+          if (err?.response?.status == 400) {
             setLoading(false);
             if (user.logged) {
               dispatch(clearApp());
               dispatch(clearUser());
             }
           }
+
         });
-      //return navigation.replace("Main");
+      //return navigation("/main");
     }
   }, [user, redo]);
 
@@ -116,7 +121,8 @@ function Auth({ navigation }) {
         }
       })
       .catch((err) => {
-        if (err.response.status == 421) {
+        console.log(err)
+        if (err?.response?.status == 421) {
           check_reg(phone);
         } else {
           err.response?.data?.message && setErr(err.response?.data?.message);
@@ -134,7 +140,8 @@ function Auth({ navigation }) {
         }
       })
       .catch((err) => {
-        if (err.response.status == 421) {
+        console.log(err)
+        if (err?.response?.status == 421) {
           check_auth(phone);
         } else {
           err.response?.data?.message && setErr(err.response?.data?.message);
@@ -149,25 +156,36 @@ function Auth({ navigation }) {
           style={{
             width: "100%",
             display: "flex",
+            display: "flex",
             flexDirection: "row",
             marginTop: 10,
-            padding: 10,
           }}
         >
           <div
             style={{
+              display: "flex",
               backgroundColor: "#444",
               height: 48,
               width: 90,
-              padding: 5,
-              marginTop: 2,
               borderRadius: 4,
-              paddingBottom: 10,
+              alignContent: "center",
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "center",
+              justifyItems: "center",
             }}
           >
-            <p style={{ color: "#ffffff", fontSize: 20, textAlign: "center" }}>
+            <div
+              style={{
+                color: "#ffffff",
+                fontSize: 23,
+                fontWeight: "500",
+                textAlign: "center",
+                alignSelf: "center",
+              }}
+            >
               Имя
-            </p>
+            </div>
           </div>
           <input
             value={name}
@@ -180,24 +198,33 @@ function Auth({ navigation }) {
             placeholderTextColor={"#6b6a69"}
             style={{
               color: "#2b2a29",
+              borderWidth: 0,
               borderBottomWidth: 1,
+              borderRadius: 3,
               borderColor: "#444",
               marginLeft: 7,
-
-              width: "100%",
-              height: 50,
-              fontSize: 20,
+              width: 270,
+              height: 46,
+              fontSize: 24,
+              paddingLeft: 15,
               fontWeight: "500",
             }}
           />
         </div>
-        <div onPress={(e) => selectFile()}>
+
+        <div
+          onClick={(e) => selectFile()}
+          style={{
+            display: "flex",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
           {response?.assets ? (
             response?.assets.map(({ uri }) => (
               <div key={uri} style={styles.imageContainer}>
                 <img
-                  resizeMode="cover"
-                  resizeMethod="scale"
                   style={{
                     width: width / 1.5,
                     height: width / 1.5,
@@ -207,7 +234,7 @@ function Auth({ navigation }) {
                     alignSelf: "center",
                     backgroundColor: "#eee",
                   }}
-                  src={{ uri: uri }}
+                  src={uri}
                 />
               </div>
             ))
@@ -219,14 +246,12 @@ function Auth({ navigation }) {
                   ? require("../../icons/photo.png")
                   : { uri: photo }
               }
-              resizeMode="contain"
               style={{
                 width: width / 1.5,
                 height: width / 1.5,
                 borderRadius: width / 1.5,
                 marginTop: 25,
                 marginBottom: 100,
-
                 tintColor: "#444",
                 alignSelf: "center",
                 backgroundColor: "#eee",
@@ -253,6 +278,8 @@ function Auth({ navigation }) {
                     .then((res) => {
                       if (res.status == 200) {
                         setErr2("");
+                        dispatch(set_JWT(res.data.jwt))
+
                         setLocalUser(res.data.user);
                         setCodeValid(true);
                       } else {
@@ -292,10 +319,11 @@ function Auth({ navigation }) {
               borderWidth: 0,
               backgroundColor: "#444",
               borderRadius: 8,
+              display: "flex",
               justifyContent: "center",
               alignSelf: "center",
               zIndex: 7,
-              marginTop: 30,
+              marginTop: 20,
               elevation: 4,
               shadowColor: "#444",
               shadowOffset: {
@@ -321,11 +349,12 @@ function Auth({ navigation }) {
           </p>
 
           <div
-            onPress={() => {
+            onClick={() => {
               if (!codeValid) {
                 return null;
               }
               if (type == "auth") {
+                
                 return dispatch(saveUser({ ...localUser, logged: true }));
               }
               if (type == "reg") {
@@ -343,10 +372,12 @@ function Auth({ navigation }) {
                       .then((res) => {
                         if (res.status == 201) {
                           setErr("");
+                          dispatch(set_JWT(res.data.jwt))
+
                           dispatch(
                             saveUser({ ...res.data.user, logged: true })
                           );
-                          navigation.replace("Main");
+                          navigation("/main");
                         } else {
                         }
                       })
@@ -371,7 +402,7 @@ function Auth({ navigation }) {
                     if (res.status == 201) {
                       setErr("");
                       dispatch(saveUser({ ...res.data.user, logged: true }));
-                      navigation.replace("Main");
+                      navigation("/main");
                     } else {
                     }
                   })
@@ -382,15 +413,20 @@ function Auth({ navigation }) {
               }
             }}
             style={{
-              width: "100%",
+              display: "flex",
+              width: "100%", //animatedWidth
               height: 70,
+              marginRight: 10,
               borderWidth: 0,
               backgroundColor: "#444",
               borderRadius: 8,
+              display: "flex",
               justifyContent: "center",
               alignSelf: "center",
+              alignItems: "center",
+              alignContent: "center",
               zIndex: 7,
-              marginTop: 30,
+              marginTop: 10,
               elevation: 4,
               shadowColor: "#444",
               shadowOffset: {
@@ -399,28 +435,24 @@ function Auth({ navigation }) {
               },
               shadowOpacity: 0.16,
               shadowRadius: 20,
+              color: "#ffffff",
+              overflow: "hidden",
+              fontSize: 25,
+              textAlign: "center",
+              fontWeight: "600",
+              cursor: "pointer",
             }}
           >
-            <p
-              style={{
-                color: "#ffffff",
-                fontSize: 29,
-                justifyContent: "center",
-                textAlign: "center",
-                fontWeight: "800",
-              }}
-            >
-              {"Начать Общение"}
-            </p>
+            {"Начать Общение"}
           </div>
-          <div
-            onPress={() => "https://dzen.ru/a/ZIXqRW1BgnT5Re_W"}
+          <a
+            href="https://dzen.ru/a/ZIXqRW1BgnT5Re_W"
             style={{
+              display: "flex",
               width: "100%",
-              height: 65,
               borderWidth: 0,
-              backgroundColor: "#444",
               borderRadius: 8,
+              display: "flex",
               justifyContent: "center",
               alignSelf: "center",
               zIndex: 7,
@@ -433,20 +465,17 @@ function Auth({ navigation }) {
               },
               shadowOpacity: 0.16,
               shadowRadius: 20,
+              color: "#444",
+              overflow: "hidden",
+              fontSize: 23,
+              textAlign: "center",
+              fontWeight: "600",
+              cursor: "pointer",
+              alignSelf: "center",
             }}
           >
-            <p
-              style={{
-                color: "#ffffff",
-                fontSize: 23,
-                justifyContent: "center",
-                textAlign: "center",
-                fontWeight: "600",
-              }}
-            >
-              {"Политика конфиденциальности"}
-            </p>
-          </div>
+            {"Политика конфиденциальности"}
+          </a>
         </div>
       );
     }
@@ -455,12 +484,14 @@ function Auth({ navigation }) {
         style={{
           width: 360,
           display: "flex",
+          display: "flex",
           flexDirection: "row",
+          display: "flex",
           justifyContent: "space-between",
         }}
       >
         <div
-          onPress={() => {
+          onClick={() => {
             /*
             Animated.timing(animatedWidth, {
               toValue: width * 0.8,
@@ -478,12 +509,14 @@ function Auth({ navigation }) {
             check_auth(phone);
           }}
           style={{
-            width: 300, //animatedWidth
+            display: "flex",
+            width: 120, //animatedWidth
             height: 70,
             marginRight: 10,
             borderWidth: 0,
             backgroundColor: "#444",
             borderRadius: 8,
+            display: "flex",
             justifyContent: "center",
             alignSelf: "center",
             alignItems: "center",
@@ -498,24 +531,18 @@ function Auth({ navigation }) {
             },
             shadowOpacity: 0.16,
             shadowRadius: 20,
+            color: "#ffffff",
+            overflow: "hidden",
+            fontSize: 25,
+            textAlign: "center",
+            fontWeight: "600",
+            cursor: "pointer",
           }}
         >
-          <p
-            numberOfLines={1}
-            style={{
-              color: "#ffffff",
-              overflow: "hidden",
-              fontSize: 25,
-              justifyContent: "center",
-              textAlign: "center",
-              fontWeight: "600",
-            }}
-          >
-            {"Войти"}
-          </p>
+          {"Войти"}
         </div>
         <div
-          onPress={() => {
+          onClick={() => {
             /*
             Animated.timing(animatedWidth2, {
               toValue: width * 0.8,
@@ -530,11 +557,13 @@ function Auth({ navigation }) {
             check_reg(phone);
           }}
           style={{
-            width: 300, //animatedWidth
+            display: "flex",
+            width: 290, //animatedWidth
             height: 70,
             borderWidth: 0,
             backgroundColor: "#444",
             borderRadius: 8,
+            display: "flex",
             justifyContent: "center",
             alignSelf: "center",
             alignItems: "center",
@@ -549,21 +578,17 @@ function Auth({ navigation }) {
             },
             shadowOpacity: 0.16,
             shadowRadius: 20,
+            color: "#ffffff",
+            overflow: "hidden",
+            fontSize: 24,
+            display: "flex",
+            justifyContent: "center",
+            textAlign: "center",
+            fontWeight: "600",
+            cursor: "pointer",
           }}
         >
-          <p
-            numberOfLines={1}
-            style={{
-              color: "#ffffff",
-              overflow: "hidden",
-              fontSize: 25,
-              justifyContent: "center",
-              textAlign: "center",
-              fontWeight: "600",
-            }}
-          >
-            {"Зарегистрироваться"}
-          </p>
+          {"Регистрация"}
         </div>
       </div>
     );
@@ -575,9 +600,6 @@ function Auth({ navigation }) {
         <div
           style={{
             backgroundColor: "#444",
-            width: "100%",
-            height: 250,
-            marginTop: 30,
             padding: 12,
             borderRadius: 8,
             elevation: 4,
@@ -588,6 +610,14 @@ function Auth({ navigation }) {
             },
             shadowOpacity: 0.16,
             shadowRadius: 20,
+            width: 340,
+            display: "flex",
+            flexDirection: "column",
+
+            justifyContent: "space-between",
+            height: "100%",
+            alignSelf: "center",
+            alignItems: "center",
           }}
         >
           <p
@@ -618,12 +648,8 @@ function Auth({ navigation }) {
         <div
           style={{
             backgroundColor: "#444",
-            width: "100%",
-            height: 250,
-            marginTop: 30,
             padding: 12,
             borderRadius: 8,
-
             elevation: 4,
             shadowColor: "#444",
             shadowOffset: {
@@ -632,6 +658,13 @@ function Auth({ navigation }) {
             },
             shadowOpacity: 0.16,
             shadowRadius: 20,
+            width: 340,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
+            height: "100%",
+            alignSelf: "center",
+            alignItems: "center",
           }}
         >
           <p
@@ -647,10 +680,10 @@ function Auth({ navigation }) {
           </p>
           <p
             style={{
-              color: "#ffffff",
+              color: "#eee",
               fontSize: 20,
               marginTop: 10,
-              fontWeight: "500",
+              fontWeight: "600",
             }}
           >
             Отвечать на звонок не нужно.
@@ -662,23 +695,24 @@ function Auth({ navigation }) {
     return (
       <div
         style={{
-          display:'flex',
-          flexDirection:'row',
+          display: "flex",
           width: 360,
-          justifyContent:'space-between',
+          display: "flex",
+          flexDirection: "column",
+
+          justifyContent: "space-between",
           backgroundColor: "#eee",
-          height:'100%',
+          height: "100%",
           alignSelf: "center",
           alignItems: "center",
         }}
       >
-        
         <div
           style={{
             color: "#444",
             fontSize: 80,
             fontWeight: "bold",
-            textAlign:'center',
+            textAlign: "center",
             textShadowColor: "rgba(50,50,50, 0.15)",
             textShadowOffset: { width: -0.3, height: 0.3 },
             textShadowRadius: 10,
@@ -689,14 +723,13 @@ function Auth({ navigation }) {
         <img
           key="logo"
           src={require("../../icons/logo.png")}
-          resizeMode="cover"
           style={{
             width: 100,
             height: 100,
             alignSelf: "center",
             tintColor: "#444",
             marginLeft: 10,
-            marginBottom:10
+            marginBottom: 10,
           }}
         />
       </div>
@@ -708,8 +741,9 @@ function Auth({ navigation }) {
       <div
         style={{
           display: "flex",
-          height: "100vh",
+          height: "100%",
           backgroundColor: "#ffffff",
+          display: "flex",
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -722,92 +756,112 @@ function Auth({ navigation }) {
   return (
     <div
       style={{
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
+        display: "flex",
+        display: "flex",
+        flexDirection: "column",
+        display: "flex",
+        justifyContent: "center",
         backgroundColor: "#eee",
-        minHeight:'100vh',
+        height: "100%",
         width: "100%",
       }}
     >
-      <div  style={{
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignContent:'center',
-        width: 360,
-        alignSelf: "center",
-        alignItems: "center",
-      }}>
-      {renderTop()}
       <div
         style={{
-          width: 360,
           display: "flex",
-          flexDirection: "row",
-          marginTop: 50,
-          padding: 10,
+          display: "flex",
+          flexDirection: "column",
+          display: "flex",
+          justifyContent: "center",
+          alignContent: "center",
+          width: 360,
+          alignSelf: "center",
+          alignItems: "center",
         }}
       >
+        {renderTop()}
         <div
           style={{
-            display:'flex',
-            backgroundColor: "#444",
-            height: 48,
-            width: 40,
-            borderRadius: 4,
-            paddingRight:5,
-            alignContent:'center',
-            alignItems:'center',
-            justifyContent:'center',
-            justifyItems: 'center'
+            width: 360,
+            display: "flex",
+            display: "flex",
+            flexDirection: "row",
+            marginTop: 30,
+            padding: 10,
           }}
         >
-          <div style={{ color: "#ffffff", fontSize: 25, textAlign: "center", alignSelf:'center' }}>
-            +7
+          <div
+            style={{
+              display: "flex",
+              backgroundColor: "#444",
+              height: 48,
+              width: 80,
+              borderRadius: 4,
+              alignContent: "center",
+              alignItems: "center",
+              display: "flex",
+              justifyContent: "center",
+              justifyItems: "center",
+            }}
+          >
+            <div
+              style={{
+                color: "#ffffff",
+                fontSize: 25,
+                textAlign: "center",
+                alignSelf: "center",
+              }}
+            >
+              +7
+            </div>
           </div>
-        </div>
-        <input
-          value={phone}
-          onChange={(e) => {
-            let t = e.target.value;
-            setPhone(t);
-            setType("default");
-            setCode("");
-            /*
+          <input
+            value={phone}
+            onChange={(e) => {
+              let t = e.target.value;
+              setPhone(t);
+              setType("default");
+              setCode("");
+              /*
             animatedWidth.setValue(width * 0.8 * 0.3);
             animatedWidth2.setValue(width * 0.8 * 0.7);*/
-          }}
-          keyboardType="numeric"
-          numberOfLines={1}
-          maxLength={10}
-          placeholder={"9991234567"}
-          placeholderTextColor={"#6b6a69"}
+            }}
+            keyboardType="numeric"
+            numberOfLines={1}
+            maxLength={10}
+            placeholder={"9991234567"}
+            placeholderTextColor={"#6b6a69"}
+            style={{
+              color: "#2b2a29",
+              borderWidth: 0,
+              borderBottomWidth: 1,
+              borderRadius: 3,
+              borderColor: "#444",
+              marginLeft: 7,
+              width: 290,
+              height: 46,
+              fontSize: 24,
+              paddingLeft: 15,
+              fontWeight: "500",
+            }}
+          />
+        </div>
+        <p
           style={{
-            color: "#2b2a29",
-            borderWidth:0,
-            borderBottomWidth: 1,
-            borderRadius:3,
-            borderColor: "#444",
-            marginLeft: 7,
-            width: 300,
-            height: 46,
-            fontSize: 24,
-            paddingLeft:15,
-            fontWeight: "500",
+            color: "#f44",
+            fontSize: 20,
+            margin: 5,
+            textAlign: "center",
           }}
-        />
-      </div>
-      <p
-        style={{ color: "#f44", fontSize: 20, margin: 5, textAlign: "center" }}
-      >
-        {err}
-      </p>
+        >
+          {err}
+        </p>
 
-      {renderButtons()}
-      {type == "reg" && renderReg()}
+        {renderButtons()}
+        {type == "reg" && renderReg()}
+        <input id='selectImage' hidden type="file" onChange={processFile} />
+
       </div>
-      
     </div>
   );
 }
@@ -818,6 +872,7 @@ const styles = {
     backgroundColor: "aliceblue",
   },
   buttonContainer: {
+    display: "flex",
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",

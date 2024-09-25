@@ -1,13 +1,4 @@
-body #root {
-  margin: 0;
-  font-family: "Inter";
-  min-height: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-#root {
-  height: 100vh;
-}
+
 code {
   font-family: "Inter", monospace;
 }
@@ -15,4 +6,14 @@ code {
 html {
   height: 100%;
   font-family: "Inter";
+}
+
+.chatBubble .css-accessibilityImage-9pa8cd {
+  inset: 0px;
+  height: 100%;
+  opacity: 1;
+  position: relative;
+  width: 100%;
+  z-index: -1;
+  object-fit: cover;
 }

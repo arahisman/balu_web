@@ -1,24 +1,26 @@
 import React from "react";
-import { NameInitialsAvatar } from "react-name-initials-avatar";
+import { Image, Text, TouchableOpacity, View } from "react-native";
+import UserAvatar from "react-native-user-avatar";
 import colors from "./styles";
 import { useSelector } from "react-redux";
+import config from "../config";
 
 const getlm = (messages, item) => {
   let m = messages[item._id];
   let lastMessage = "";
   if (m && m.length) {
-    lastMessage = m[0].p;
+    lastMessage = m[0].text;
   }
   return lastMessage;
 };
-const renderImg = (item, users, user, theme) => {
+const renderImage = (item, users, user, theme) => {
   const type = item.type;
 
   let u = { name: "", photo: "" };
   if (!item || !item.users) {
     return null;
   }
-  if (type === "group") {
+  if (type == "group") {
     if (item.name && item.name.length) {
       u.name = item.name;
       u.photo = item.photo;
@@ -42,11 +44,11 @@ const renderImg = (item, users, user, theme) => {
       }
     }
   }
-
+  console.log(user)
   if (u.photo?.length) {
     return (
-      <Img
-        source={{ uri: u.photo }}
+      <img
+        src={ config.baseURL+u.photo}
         resizeMode="contain"
         style={{
           width: 50,
@@ -59,7 +61,7 @@ const renderImg = (item, users, user, theme) => {
     );
   } else {
     return (
-      <div
+      <View
         style={{
           width: 50,
           margin: 10,
@@ -67,15 +69,8 @@ const renderImg = (item, users, user, theme) => {
           borderRadius: 137,
         }}
       >
-        <NameInitialsAvatar
-          size={"50px"}
-          bgColor="#9af"
-          borderColor="#fff"
-          textColor="#fff"
-          textSize="50px"
-          name={u?.name ? u.name : u.phone}
-        />
-      </div>
+        <UserAvatar size={50} name={u?.name ? u.name : u.phone} />
+      </View>
     );
   }
 };
@@ -108,7 +103,7 @@ const getName = (item, users, user, theme) => {
   return u.name;
 };
 
-const ChatItem = ({ onPress, item, removeChat }) => {
+const ChatItem = ({ onClick, item, removeChat }) => {
   const user = useSelector((state) => state.usr);
   const users = useSelector((state) => state.app.user_list);
   const theme = useSelector((state) => state.app.theme);
@@ -118,10 +113,10 @@ const ChatItem = ({ onPress, item, removeChat }) => {
   const count = nm[item._id] || 0;
 
   return (
-    <div
+    <TouchableOpacity
       key={item._id}
       activeOpacity={1}
-      onPress={onPress}
+      onPress={onClick}
       onLongPress={removeChat}
       style={{
         width: "100%",
@@ -138,9 +133,9 @@ const ChatItem = ({ onPress, item, removeChat }) => {
         shadowRadius: 20,
       }}
     >
-      {renderImg(item, users, user, theme)}
-      <div>
-        <p
+      {renderImage(item, users, user, theme)}
+      <View>
+        <Text
           numberOfLines={1}
           style={{
             marginLeft: 10,
@@ -153,8 +148,8 @@ const ChatItem = ({ onPress, item, removeChat }) => {
           }}
         >
           {getName(item, users, user, theme)}
-        </p>
-        <p
+        </Text>
+        <Text
           numberOfLines={1}
           style={{
             marginLeft: 10,
@@ -165,11 +160,11 @@ const ChatItem = ({ onPress, item, removeChat }) => {
             overflow: "hidden",
           }}
         >
-          {getlm(messages, item)}
-        </p>
-      </div>
+          {item.last_msg_text||''}
+        </Text>
+      </View>
       {count > 0 && (
-        <p
+        <Text
           style={{
             color: "#ffffff",
             backgroundColor: "#e88",
@@ -185,9 +180,9 @@ const ChatItem = ({ onPress, item, removeChat }) => {
           }}
         >
           {count}
-        </p>
+        </Text>
       )}
-    </div>
+    </TouchableOpacity>
   );
 };
 

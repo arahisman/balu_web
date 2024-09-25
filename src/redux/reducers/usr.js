@@ -16,7 +16,8 @@ const initialState = {
     chat_list: [],
     code: "",
     logged: false,
-    favorite: []
+    favorite: [],
+    jwt:""
 };
 
 export const usr = (state = initialState, action) => {
@@ -38,6 +39,7 @@ export const usr = (state = initialState, action) => {
             };
         case SET_USER:
             return {
+                ...state,
                 ...action.payload,
             };
         case SET_LOGGED:
@@ -48,6 +50,11 @@ export const usr = (state = initialState, action) => {
         case 'CLEAR_USER':
             state = initialState;
             return {...state}
+        case 'SET_JWT':
+            return{
+                ...state,
+                jwt: action.payload.jwt
+            }    
         default:
             return state;
     }

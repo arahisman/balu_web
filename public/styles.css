@@ -1,0 +1,372 @@
+/* Общие стили */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.app{
+  display: none;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+
+#root{
+  height: 70vh !important;
+}
+
+header nav ul {
+  display: flex;
+  list-style: none;
+}
+
+header nav ul li {
+  margin-right: 20px;
+}
+
+header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+header .logo {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.5em;
+}
+
+header .links a {
+  margin-left: 10px;
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border: 1px solid #fff;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+header .links a:hover {
+  background-color: #fff;
+  color: #333;
+}
+
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+  background: url("hero-bg.jpg") no-repeat center center;
+  background-size: cover;
+  color: #fff;
+}
+
+.hero h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.2em;
+  margin-bottom: 40px;
+}
+
+.hero .cta a {
+  display: inline-block;
+  margin: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.hero .cta a:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+.hero img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 40px;
+}
+
+.about,
+.features,
+.additional-features,
+.team,
+.sponsors,
+.corporate-sponsors,
+.testimonials,
+.contact {
+  padding: 50px 20px;
+}
+
+.about,
+.contact {
+  background-color: #f4f4f4;
+  text-align: center;
+}
+
+.features,
+.additional-features,
+.testimonials {
+  text-align: center;
+}
+
+.testimonials{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.features h2,
+.additional-features h2,
+.team h2,
+.sponsors h2,
+.corporate-sponsors h2,
+.testimonials h2 {
+  font-size: 2em;
+  margin-bottom: 40px;
+}
+
+.carousel,
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.card {
+  margin: 10px;
+  min-width: 200px;
+  padding: 20px;
+  background-color: #fff;
+  color: #121212;
+  border-radius: 10px;
+  text-align: center;
+  align-items: center;
+  min-height: 380px !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  align-self: center;
+  max-width: 100%;
+  height: auto;
+  margin: auto;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.testimonials .testimonial {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #f4f4f4;
+  color: #333 !important;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+}
+
+.contact form {
+  display: inline-block;
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+}
+
+.contact form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.contact form input,
+.contact form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact form textarea {
+  height: 150px;
+  resize: vertical;
+}
+
+.contact form button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+  cursor: pointer;
+}
+
+.contact form button:hover {
+  background-color: #0056b3;
+  color: #fff;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background-color: #333;
+  color: #fff;
+}
+
+footer a {
+  color: #fff;
+  margin: 0 10px;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #007bff;
+}
+
+.social-media {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.social-icon {
+  padding: 10px 20px;
+  background-color: #333;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.social-icon:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Стили слайдера */
+.slider {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.slide {
+  text-align: center;
+  margin: 10px;
+  padding: 20px;
+  background-color: #fff;
+  color: #121212;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.slide:hover {
+  transform: scale(1.05);
+}
+
+.slide img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+  border-radius: 50%;
+}
+
+.team-slider .slide img,
+.corporate-sponsors-slider .slide img {
+  border-radius: 0; /* Без закругления для логотипов компаний */
+}
+
+/* Дополнительные стили для тем */
+.theme-dark,
+.theme-dark .hero,
+.theme-dark .about,
+.theme-dark .features,
+.theme-dark .additional-features,
+.theme-dark .team,
+.theme-dark .sponsors,
+.theme-dark .corporate-sponsors,
+.theme-dark .testimonials,
+.theme-dark .contact{
+  background-color: #121212;
+  color: #f4f4f4;
+
+}
+
+.theme-light,
+.theme-light .hero,
+.theme-light .about,
+.theme-light .features,
+.theme-light .additional-features,
+.theme-light .team,
+.theme-light .sponsors,
+.theme-light .corporate-sponsors,
+.theme-light .contact {
+  background-color: #f4f4f4;
+  color: #121212 !important;
+}
+
+.theme-light .testimonials .testimonial{
+  background-color: #ffffff !important;
+}
+
+.theme-green,
+.theme-green .hero,
+.theme-green .about,
+.theme-green .features,
+.theme-green .additional-features,
+.theme-green .team,
+.theme-green .sponsors,
+.theme-green .corporate-sponsors,
+.theme-green .testimonials,
+.theme-green .contact {
+  background-color: #1b5e20;
+  color: #ffffff;
+}
+
+.theme-rf,
+.theme-rf .hero,
+.theme-rf .about,
+.theme-rf .features,
+.theme-rf .additional-features,
+.theme-rf .team,
+.theme-rf .sponsors,
+.theme-rf .corporate-sponsors,
+.theme-rf .testimonials,
+.theme-rf .contact {
+  background-color: rgb(187, 219, 247);
+  color: #212121;
+}

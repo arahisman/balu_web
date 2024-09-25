@@ -10,7 +10,7 @@ const MainInputMask = ({
   type,
   onChangep,
   label,
-  onPress,
+  onClick,
   color = "#fff",
   backgroundColor = "#fff",
   placeholder = "empty",
@@ -31,7 +31,7 @@ const MainInputMask = ({
         <MaskInput
           value={value}
           editable={active}
-          onChangep={(masked, unmasked) => {
+          onChangeText={(masked, unmasked) => {
             if (active) {
               onChangep(masked);
             }

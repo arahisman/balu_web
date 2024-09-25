@@ -1,8 +1,8 @@
 import React from "react";
 import colors from "./styles";
 import { useSelector } from "react-redux";
-
-const HeaderBack = ({ onPress, onPress2, color = "#AAAAAA" }) => {
+import { Image } from "react-native";
+const HeaderBack = ({ onClick, onPress2, color = "#AAAAAA" }) => {
   const theme = useSelector((state) => state.app.theme);
 
   return (
@@ -11,6 +11,7 @@ const HeaderBack = ({ onPress, onPress2, color = "#AAAAAA" }) => {
         width: "100%",
         height: 60,
         backgroundColor: colors[theme].color1,
+        display: "flex",
         flexDirection: "row",
         elevation: 4,
         shadowColor: colors[theme].color12,
@@ -20,12 +21,15 @@ const HeaderBack = ({ onPress, onPress2, color = "#AAAAAA" }) => {
         },
         shadowOpacity: 0.16,
         shadowRadius: 20,
+        display: "flex",
         justifyContent: "space-between",
       }}
     >
       <div
         style={{
+          display: "flex",
           flexDirection: "column",
+          display: "flex",
           justifyContent: "center",
           alignContent: "center",
           alignSelf: "center",
@@ -46,25 +50,29 @@ const HeaderBack = ({ onPress, onPress2, color = "#AAAAAA" }) => {
           Меню
         </p>
       </div>
-      <div style={{ flexDirection: "row" }}>
+      <div style={{ display: "flex", flexDirection: "row" }}>
         <div
-          onPress={onPress2}
+          onClick={onPress2}
           style={{
+            display: "flex",
             flexDirection: "row",
             marginRight: 10,
+            display: "flex",
             justifyContent: "flex-start",
           }}
         >
-          <Img
-            key="menu"
+          <Image
             source={require("../icons/menu.png")}
-            resizeMode="contain"
+            color={colors[theme].color3}
             style={{
               width: 38,
               height: 38,
-              tintColor: colors[theme].color3,
               alignSelf: "center",
+              tintColor: colors[theme].color3,
+              cursor: 'pointer'
             }}
+            maxHeight={38}
+            maxWidth={38}
           />
         </div>
       </div>

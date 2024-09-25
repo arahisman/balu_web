@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Image } from "react-native";s
 import { useSelector } from "react-redux";
 
 const PasswordInput = ({
@@ -8,7 +8,7 @@ const PasswordInput = ({
   onChangep,
   label,
   showPassword = false,
-  onPress,
+  onClick,
   color = "#fff",
   backgroundColor = "#fff",
   placeholder = "empty",
@@ -43,21 +43,27 @@ const PasswordInput = ({
         />
         {/*Кнопка скрывающая и показывающая пароль по нажатию */}
         <div
-          onPress={onPress}
+          onClick={onClick}
           style={{
             textAlign: "center",
             alignSelf: "center",
             alignItems: "center",
           }}
         >
-          <Img
-            source={
+          <Image
+            src={
               showPassword
                 ? require("../icons/eye.png")
                 : require("../icons/eyeclosed.png")
             }
-            resizeMode="cover"
-            style={{ width: 20, height: 20, tintColor: "#aaa" }}
+            color="#aaa"
+            style={{
+              width: 20,
+              height: 20,
+              tintColor: "#aaa",
+            }}
+            maxHeight={20}
+            maxWidth={20}
           />
         </div>
       </div>

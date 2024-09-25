@@ -1,43 +1,484 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ru">
   <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="initial-scale=1, width=device-width" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Панель администратора"
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BALU</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>ADMIN_PANEL</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css"
+    />
   </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+  <body class="theme-dark">
+    <header>
+      <div class="logo" onclick="switchTheme()">BALU</div>
+      <nav>
+        <ul>
+          <li><a href="#" onclick="scrollToClass('hero')">Домой</a></li>
+          <li><a href="#" onclick="scrollToClass('about')">О приложении</a></li>
+          <li><a href="#" onclick="scrollToClass('features')">Функции</a></li>
+          <li>
+            <a href="#" onclick="scrollToClass('additional-features')"
+              >Дополнительные функции</a
+            >
+          </li>
+          <li><a href="#" onclick="scrollToClass('contact')">Контакты</a></li>
+        </ul>
+      </nav>
+      <div class="links">
+        <a id="web" href="#" onclick="showApp()">Веб-версия</a>
+        <a href="https://donate.stream/nbs_wt">Сбор средств</a>
+        <a href="https://play.google.com/store/apps/details?id=com.dev.balu"
+          >Загрузить</a
+        >
+      </div>
+    </header>
+    <div class="main">
+      <section class="hero">
+        <h1>Новый уровень общения</h1>
+        <p>BALU — это безопасный и удобный мессенджер для всех ваших нужд.</p>
+        <div class="cta">
+          <a href="https://donate.stream/nbs_wt"
+            >Проект на стадии разработки, поддержите нас и получите небольшие,
+            но прикольные подарки от кампании.</a
+          >
+          <a id="web" href="#" onclick="showApp()">Веб-версия</a>
+          <a href="https://donate.stream/nbs_wt">Сбор средств</a>
+          <a href="https://play.google.com/store/apps/details?id=com.dev.balu"
+            >Загрузить</a
+          >
+        </div>
+        <div
+          style="
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            justify-content: center;
+          "
+        >
+          <img
+            src="/screen2.png"
+            alt="BALU App Screenshot"
+            style="height: 500px; border-radius: 5px"
+          />
+          <img
+            src="/screen.png"
+            alt="BALU App Screenshot"
+            style="height: 500px; border-radius: 5px"
+          />
+        </div>
+      </section>
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+      <section class="about">
+        <h2>О BALU</h2>
+        <p>Краткое описание идеи и миссии приложения.</p>
+      </section>
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+      <section class="features">
+        <h2>Функции</h2>
+        <div class="carousel">
+          <div class="card">
+            <h3>Чаты</h3>
+            <p>Общайтесь с друзьями и коллегами в удобных чатах.</p>
+            <img src="icons/messages.png" alt="Чаты" style="height: 200px" />
+            <p>Стоимость: БЕСПЛАТНО</p>
+          </div>
+          <div class="card">
+            <h3>Звонки</h3>
+            <p>Осуществляйте голосовые и видеозвонки в высоком качестве.</p>
+            <img src="/icons/call.png" alt="Звонки" style="height: 200px" />
+            <p>Стоимость: БЕСПЛАТНО</p>
+          </div>
+          <div class="card">
+            <h3>Безопасность</h3>
+            <p>Ваши сообщения надежно защищены с помощью шифрования.</p>
+            <img
+              src="/icons/home.png"
+              alt="Безопасность"
+              style="height: 200px"
+            />
+            <p>Стоимость: БЕСПЛАТНО</p>
+          </div>
+          <div class="card">
+            <h3>Чаты</h3>
+            <p>Общайтесь с друзьями и коллегами в удобных чатах.</p>
+            <img src="icons/messages.png" alt="Чаты" style="height: 200px" />
+            <p>Стоимость: БЕСПЛАТНО</p>
+          </div>
+          <div class="card">
+            <h3>Звонки</h3>
+            <p>Осуществляйте голосовые и видеозвонки в высоком качестве.</p>
+            <img src="/icons/call.png" alt="Звонки" style="height: 200px" />
+            <p>Стоимость: БЕСПЛАТНО</p>
+          </div>
+          <div class="card">
+            <h3>Безопасность</h3>
+            <p>Ваши сообщения надежно защищены с помощью шифрования.</p>
+            <img
+              src="/icons/home.png"
+              alt="Безопасность"
+              style="height: 200px"
+            />
+            <p>Стоимость: БЕСПЛАТНО</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="additional-features">
+        <h2>Дополнительные функции</h2>
+        <div class="carousel">
+          <div class="card">
+            <h3>Премиум</h3>
+            <p>Дополнительные функции и возможности.</p>
+            <img src="/icons/plus.png" alt="Премиум" style="height: 200px" />
+            <p>Стоимость: $4.99/месяц</p>
+          </div>
+          <div class="card">
+            <h3>Для команд</h3>
+            <p>Интеграция с бизнес-инструментами и корпоративные функции.</p>
+            <img
+              src="/icons/group.png"
+              alt="Безопасность"
+              style="height: 200px"
+            />
+            <p>Стоимость: $9.99/месяц</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="team">
+        <h2>Создатели</h2>
+        <div class="slider team-slider">
+          <div class="slide">
+            <img
+              src="icons/profile.png"
+              alt="Team Member 1"
+              style="height: 60px"
+            />
+            <p>ФИО: Иван Иванов</p>
+            <p>Должность: Руководитель проекта</p>
+            <p>Пожелание: "Спасибо за поддержку!"</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/profile.png"
+              alt="Team Member 2"
+              style="height: 60px"
+            />
+            <p>ФИО: Ольга Петрова</p>
+            <p>Должность: Разработчик</p>
+            <p>Пожелание: "Работаем для вас!"</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/profile.png"
+              alt="Team Member 2"
+              style="height: 60px"
+            />
+            <p>ФИО: Ольга Петрова</p>
+            <p>Должность: Разработчик</p>
+            <p>Пожелание: "Работаем для вас!"</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/profile.png"
+              alt="Team Member 2"
+              style="height: 60px"
+            />
+            <p>ФИО: Ольга Петрова</p>
+            <p>Должность: Разработчик</p>
+            <p>Пожелание: "Работаем для вас!"</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/profile.png"
+              alt="Team Member 2"
+              style="height: 60px"
+            />
+            <p>ФИО: Ольга Петрова</p>
+            <p>Должность: Разработчик</p>
+            <p>Пожелание: "Работаем для вас!"</p>
+          </div>
+          <!-- Добавьте следующие карточки так же -->
+        </div>
+      </section>
+
+      <section class="sponsors">
+        <h2>Спонсоры</h2>
+        <div class="slider sponsors-slider">
+          <div class="slide">
+            <p>ФИО: Александр Смирнов</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Мария Сидорова</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Александр Смирнов</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Мария Сидорова</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Александр Смирнов</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Мария Сидорова</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Александр Смирнов</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Мария Сидорова</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Александр Смирнов</p>
+          </div>
+          <div class="slide">
+            <p>ФИО: Мария Сидорова</p>
+          </div>
+
+          <!-- Добавьте следующие карточки так же -->
+        </div>
+      </section>
+
+      <section class="corporate-sponsors">
+        <h2>Корпоративные спонсоры</h2>
+        <div class="slider corporate-sponsors-slider">
+          <div class="slide">
+            <img
+              src="icons/sun.png"
+              style="height: 60px"
+              alt="Company 1"
+              onclick="window.open('http://company1.com', '_blank')"
+            />
+            <p>Компания: Company 1</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/moon.png"
+              style="height: 60px"
+              alt="Company 2"
+              onclick="window.open('http://company2.com', '_blank')"
+            />
+            <p>Компания: Company 2</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/sun.png"
+              style="height: 60px"
+              alt="Company 1"
+              onclick="window.open('http://company1.com', '_blank')"
+            />
+            <p>Компания: Company 1</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/moon.png"
+              style="height: 60px"
+              alt="Company 2"
+              onclick="window.open('http://company2.com', '_blank')"
+            />
+            <p>Компания: Company 2</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/sun.png"
+              style="height: 60px"
+              alt="Company 1"
+              onclick="window.open('http://company1.com', '_blank')"
+            />
+            <p>Компания: Company 1</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/moon.png"
+              style="height: 60px"
+              alt="Company 2"
+              onclick="window.open('http://company2.com', '_blank')"
+            />
+            <p>Компания: Company 2</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/sun.png"
+              style="height: 60px"
+              alt="Company 1"
+              onclick="window.open('http://company1.com', '_blank')"
+            />
+            <p>Компания: Company 1</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/moon.png"
+              style="height: 60px"
+              alt="Company 2"
+              onclick="window.open('http://company2.com', '_blank')"
+            />
+            <p>Компания: Company 2</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/sun.png"
+              style="height: 60px"
+              alt="Company 1"
+              onclick="window.open('http://company1.com', '_blank')"
+            />
+            <p>Компания: Company 1</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/moon.png"
+              style="height: 60px"
+              alt="Company 2"
+              onclick="window.open('http://company2.com', '_blank')"
+            />
+            <p>Компания: Company 2</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/sun.png"
+              style="height: 60px"
+              alt="Company 1"
+              onclick="window.open('http://company1.com', '_blank')"
+            />
+            <p>Компания: Company 1</p>
+          </div>
+          <div class="slide">
+            <img
+              src="icons/moon.png"
+              style="height: 60px"
+              alt="Company 2"
+              onclick="window.open('http://company2.com', '_blank')"
+            />
+            <p>Компания: Company 2</p>
+          </div>
+          <!-- Добавьте следующие карточки так же -->
+        </div>
+      </section>
+
+      <section class="testimonials">
+        <h2>Отзывы</h2>
+        <div class="testimonial">
+          <p>
+            "BALU — лучший мессенджер, который я когда-либо использовал!" — Иван
+            Иванов
+          </p>
+        </div>
+        <div class="testimonial">
+          <p>
+            "Невероятно удобное приложение для всех видов общения." — Ольга
+            Петрова
+          </p>
+        </div>
+      </section>
+
+      <section class="contact">
+        <h2>Контакты</h2>
+        <form>
+          <label for="name">Имя</label>
+          <input type="text" id="name" name="name" />
+
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" />
+
+          <label for="message">Сообщение</label>
+          <textarea id="message" name="message"></textarea>
+
+          <button type="submit">Отправить</button>
+        </form>
+        <p>Email: support@balu.com</p>
+        <div class="social-media">
+          <a href="#" class="social-icon">Facebook</a>
+          <a href="#" class="social-icon">Twitter</a>
+          <a href="#" class="social-icon">Instagram</a>
+        </div>
+      </section>
+
+      <footer>
+        <p>&copy; 2023 NBS-wt</p>
+        <p>Email: NBS-w.t@yandex.ru</p>
+        <a href="https://dzen.ru/a/ZIXqRW1BgnT5Re_W"
+          >Политика конфиденциальности</a
+        >
+        <a href="https://dzen.ru/a/ZIXqRW1BgnT5Re_W"
+          >Пользовательское соглашение</a
+        >
+      </footer>
+    </div>
+    <div id="root" class="app"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+    <script>
+      let isWebVisiable = false;
+      const themes = ["theme-dark", "theme-light", "theme-green", "theme-rf"];
+      let currentThemeIndex = 0;
+
+      function scrollToClass(classname) {
+        document.getElementsByClassName("main")[0].style.maxHeight = "100%";
+        document.getElementsByClassName("main")[0].style.visibility = "visible";
+        document.getElementsByClassName("app")[0].style.display = "none";
+        const els = document.getElementsByClassName(classname);
+        els[0].scrollIntoView({ behavior: "smooth" });
+      }
+
+      function showApp() {
+        document.getElementsByClassName("main")[0].style.maxHeight = "0px";
+        document.getElementsByClassName("main")[0].style.visibility = "hidden";
+        document.getElementsByClassName("app")[0].style.display = "block";
+      }
+
+      function switchTheme() {
+        currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+        document.body.className = themes[currentThemeIndex];
+      }
+
+      // Функция для автоматической смены темы каждые 6 секунд
+      function startThemeSwitcher() {
+        setInterval(switchTheme, 6000);
+      }
+
+      $(document).ready(function () {
+        $(".team-slider").slick({
+          slidesToShow: 2,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          infinite: true,
+        });
+
+        $(".sponsors-slider").slick({
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          infinite: true,
+        });
+
+        $(".corporate-sponsors-slider").slick({
+          slidesToShow: 3,
+          slidesToScroll: 1,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          infinite: true,
+        });
+        $(".features .carousel").slick({
+          slidesToShow: 3,
+          slidesToScroll: 2,
+          autoplay: true,
+          autoplaySpeed: 2000,
+          infinite: true,
+        });
+        // Запуск функции смены темы
+        startThemeSwitcher();
+      });
+    </script>
   </body>
 </html>

@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import colors from './styles';
 
-const HeaderTitle = ({p = 'screen'}) => {
+const HeaderTitle = ({text='screen'}) => {
   const theme = useSelector(state => state.app.theme);
 
   return (
@@ -11,7 +11,8 @@ const HeaderTitle = ({p = 'screen'}) => {
         width: '100%',
         height: 60,
         backgroundColor: colors[theme].color1,
-        flexDirection: 'row',
+        display: 'flex',
+flexDirection: 'row',
         elevation: 10,
         shadowColor: colors[theme].color12,
         shadowOffset: {
@@ -26,14 +27,15 @@ const HeaderTitle = ({p = 'screen'}) => {
           color: colors[theme].color3,
           fontWeight: '600',
           fontSize: 20,
-          justifyContent: 'center',
+          display: 'flex',
+justifyContent: 'center',
           textAlign: 'center',
           margin:10,
           position: 'absolute',
           left: 0,
           right: 0,
         }}>
-        {p}
+        {text}
       </p>
     </div>
   );

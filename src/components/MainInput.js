@@ -6,7 +6,7 @@ export default MainInput = React.memo(
          value = '', error = 'v',
          onChangep,
          label,
-         onPress,
+         onClick,
          color = '#fff',
          backgroundColor = '#fff',
          placeholder = 'empty',

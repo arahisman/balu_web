@@ -1,10 +1,12 @@
-import React from "react";
-import { NameInitialsAvatar } from "react-name-initials-avatar";
-import colors from "./styles";
-import { useSelector } from "react-redux";
+import React from 'react';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
+import UserAvatar from 'react-native-user-avatar';
+import colors from './styles';
+import {useSelector} from 'react-redux';
+import config from "../config";
 
-const renderImg = (item, theme) => {
-  let u = { name: "", photo: "" };
+const renderImage = (item, theme) => {
+  let u = {name: '', photo: ''};
   if (!item || !item.users) {
     return null;
   }
@@ -15,60 +17,52 @@ const renderImg = (item, theme) => {
 
   if (u.photo?.length) {
     return (
-      <Img
-        source={{ uri: u.photo }}
+      <img
+        src={config.baseURL+u.photo}
         resizeMode="contain"
         style={{
           width: 50,
           margin: 7,
           height: 50,
           borderRadius: 137,
-          borderColor: colors[theme]?.color4 || "#fff",
+          borderColor: colors[theme]?.color4 || '#fff',
         }}
       />
     );
   } else {
     return (
-      <div
+      <View
         style={{
           width: 50,
           margin: 10,
           height: 50,
           borderRadius: 137,
-        }}
-      >
-        <NameInitialsAvatar
-          size={"50px"}
-          bgColor="#9af"
-          borderColor="#fff"
-          textColor="#fff"
-          textSize="50px"
-          name={u?.name}
-        />{" "}
-      </div>
+        }}>
+        <UserAvatar size={50} name={u?.name} />
+      </View>
     );
   }
 };
-const getName = (item) => {
+const getName = item => {
   return item.name;
 };
 
-const GroupItem = ({ onPress, item, removeChat }) => {
-  const user = useSelector((state) => state.usr);
-  const users = useSelector((state) => state.app.user_list);
-  const theme = useSelector((state) => state.app.theme);
+const GroupItem = ({onClick, item, removeChat}) => {
+  const user = useSelector(state => state.usr);
+  const users = useSelector(state => state.app.user_list);
+  const theme = useSelector(state => state.app.theme);
 
   return (
-    <div
+    <TouchableOpacity
       key={item._id}
       activeOpacity={1}
-      onPress={onPress}
+      onPress={onClick}
       onLongPress={removeChat}
       style={{
-        width: "100%",
+        width: '100%',
         height: 65,
         backgroundColor: colors[theme].color5,
-        flexDirection: "row",
+        flexDirection: 'row',
         elevation: 6,
         shadowColor: colors[theme].color12,
         shadowOffset: {
@@ -77,37 +71,34 @@ const GroupItem = ({ onPress, item, removeChat }) => {
         },
         shadowOpacity: 0.36,
         shadowRadius: 20,
-      }}
-    >
-      {renderImg(item, users, user, theme)}
-      <div>
-        <p
+      }}>
+      {renderImage(item, users, user, theme)}
+      <View>
+        <Text
           numberOfLines={1}
           style={{
             marginLeft: 10,
             color: colors[theme].color6,
             marginTop: 5,
             fontSize: 18,
-            fontWeight: "500",
-            overflow: "hidden",
-            width: "100%",
-          }}
-        >
+            fontWeight: '500',
+            overflow: 'hidden',
+            width: '100%',
+          }}>
           {getName(item, users, user, theme)}
-        </p>
-        <p
+        </Text>
+        <Text
           numberOfLines={1}
           style={{
             marginLeft: 10,
             color: colors[theme].color4,
             marginBottom: 5,
             fontSize: 16,
-            fontWeight: "400",
-            overflow: "hidden",
-          }}
-        ></p>
-      </div>
-    </div>
+            fontWeight: '400',
+            overflow: 'hidden',
+          }}></Text>
+      </View>
+    </TouchableOpacity>
   );
 };
 

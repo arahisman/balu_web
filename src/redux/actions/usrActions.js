@@ -38,3 +38,9 @@ export function saveFavorite(favorite) {
         payload: {favorite},
     };
 }
+export function set_JWT(jwt) {
+    return {
+        type: "SET_JWT",
+        payload: {jwt},
+    };
+}

@@ -25,6 +25,12 @@ export const new_msg = async (data) => {
     let response = await apiClient().post("/new_msg", data);
     return response;
 };
+
+export const get_messages = async (data) => {
+    let response = await apiClient().post("/get_messages", data);
+    return response;
+};
+
 export const get_new_msgs = async (data) => {
     let response = await apiClient().post("/get_new_msgs", data);
     return response;
