@@ -34,6 +34,7 @@ import {
 } from "react-native";
 import { useAudioRecorder } from "react-audio-voice-recorder";
 import config from "../../config";
+import MessageItem from "./MessageItem";
 
 const Chat = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,10 @@ const Chat = () => {
   const user = useSelector((state) => state.usr);
   const width = "100%";
   const height = "100vh";
-  const chat = Object.values(chats).find((i) => i._id == route.params.id);
+  if(!route?.params?.id){
+      navigation(-1);
+  }
+  const chat = Object.values(chats).find((i) => i._id == route?.params?.id);
   if (!chat) {
     navigation(-1);
   }
@@ -79,15 +83,16 @@ const Chat = () => {
   const [messageToEdit, setMessageToEdit] = useState({});
   const [counter, setCounter] = useState(4);
   const [open, setOpen] = React.useState(false);
+  let [img, setImg] = useState(null);
 
   const isAdmin =
-    chat && chat.admin_list && chat.admin_list.some((i) => i == user._id);
+    chat && chat?.admin_list && chat?.admin_list.some((i) => i == user._id);
   const checkPermission = async () => {};
 
   useEffect(() => {
     checkPermission();
     setCname(getName(users));
-    get_messages({ chat_id: chat._id, user_id: user._id }).then((res) =>
+    get_messages({ chat_id: chat?._id, user_id: user._id }).then((res) =>
       setMessages(
         res.data.messages.map((i) => {
           if (i.image) {
@@ -130,56 +135,45 @@ const Chat = () => {
     setAudioFile("");
     recorderControls.stopRecording();
   };
-
-  const renderMessageAudio = (props) => {
-    const { currentMessage } = props;
-    let audio = new Audio(currentMessage.audio);
+  const renderMessage = props => {
+    const {currentMessage} = props;
+    if (!currentMessage.text.length) {
+      currentMessage.text = 'crhsnj%$dhdh...573';
+    }
     return (
-      <div>
-        <div>{currentMessage._id}</div>
-        <div>{currentMessage.id}</div>
-        <div>{currentMessage.oldId}</div>
-
-        <div
-          style={{
-            margin: 10,
-            width: 150,
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
+      <View>
+        <Bubble
+          {...props}
+          wrapperStyle={{
+            right: {
+              // Here is the color change
+              marginBottom: 5,
+              backgroundColor: colors[theme].color1,
+              minWidth: !currentMessage.text.length ? '70%' : undefined,
+              minHeight: !currentMessage.text.length ? 40 : undefined,
+            },
+            left: {
+              backgroundColor: colors[theme].color6,
+              marginBottom: 5,
+              minHeight: !currentMessage.text.length ? 40 : undefined,
+              minWidth: !currentMessage.text.length ? '70%' : undefined,
+            },
           }}
-          onClick={() => {
-            if (!audio.paused) {
-              audio.pause();
-            } else {
-              audio.play();
-            }
-          }}
-        >
-          <RNImage
-            source={require("../../icons/play.png")}
-            tintColor="#fff"
-            style={{
-              marginRight: 5,
-              width: 32,
-              height: 32,
-              tintColor: "#ffffff",
-              alignSelf: "center",
-            }}
-            maxHeight={32}
-            maxWidth={32}
-          />
-          <div
-            style={{
-              height: 3,
-              width: 120,
-              marginTop: 13,
-              backgroundColor: "#ffffff",
-              borderRadius: 10,
-            }}
-          ></div>
-        </div>
-      </div>
+          textStyle={{
+            right: {
+              color:
+                currentMessage.text === 'crhsnj%$dhdh...573'
+                  ? 'transparent'
+                  : colors[theme].color3,
+            },
+            left: {
+              color:
+                currentMessage.text === 'crhsnj%$dhdh...573'
+                  ? 'transparent'
+                  : colors[theme].color5,
+            },
+          }}></Bubble>
+      </View>
     );
   };
 
@@ -379,16 +373,16 @@ const Chat = () => {
               onClick={() => {
                 let index = "";
                 if (event.id) {
-                  index = chat.events.findIndex((e) => e.id == event.id);
+                  index = chat?.events.findIndex((e) => e.id == event.id);
                 } else {
-                  index = chat.events.findIndex(
+                  index = chat?.events.findIndex(
                     (e) => e.startTime == event.startTime
                   );
                 }
                 setMessageLocal(currentMessage);
                 setShowSubEventListModal(true);
-                if (chat.events[index]) {
-                  setEventLocal(chat.events[index]);
+                if (chat?.events[index]) {
+                  setEventLocal(chat?.events[index]);
                 } else {
                   setEventLocal(event);
                 }
@@ -619,7 +613,7 @@ const Chat = () => {
                 }}
               />
             </TouchableOpacity>
-            {chat.type == "group" && isAdmin && (
+            {chat?.type == "group" && isAdmin && (
               <TouchableOpacity
                 style={{
                   height: 40,
@@ -727,14 +721,14 @@ const Chat = () => {
               onPress={() => {
                 setShowCall(false);
                 let i = users.find(
-                  (i) => i._id == chat.users.find((j) => j !== user._id)
+                  (i) => i._id == chat?.users.find((j) => j !== user._id)
                 );
                 navigation.navigate("Call", {
-                  channel: chat._id,
+                  channel: chat?._id,
                   user_id: i,
                   video: true,
                   isCaller: true,
-                  name: chat.name,
+                  name: chat?.name,
                 });
               }}
             >
@@ -773,14 +767,14 @@ const Chat = () => {
               onPress={() => {
                 setShowCall(false);
                 let i = users.find(
-                  (i) => i._id == chat.users.find((j) => j !== user._id)
+                  (i) => i._id == chat?.users.find((j) => j !== user._id)
                 );
                 navigation.navigate("Call", {
-                  channel: chat._id,
+                  channel: chat?._id,
                   user_id: i,
                   video: false,
                   isCaller: true,
-                  name: chat.name,
+                  name: chat?.name,
                 });
               }}
             >
@@ -808,7 +802,7 @@ const Chat = () => {
                 }}
               />
             </TouchableOpacity>
-            {chat.type == "group" && isAdmin && (
+            {chat?.type == "group" && isAdmin && (
               <TouchableOpacity
                 style={{
                   height: 40,
@@ -872,14 +866,14 @@ const Chat = () => {
   };
 
   const getName = (users) => {
-    if (chat.type == "group") {
-      return chat.name;
+    if (chat?.type == "group") {
+      return chat?.name;
     }
     if (users.length) {
       let u = {};
       if (users && users[0]) {
         let i = users.find(
-          (i) => i._id == chat.users.find((j) => j !== user._id)
+          (i) => i._id == chat?.users.find((j) => j !== user._id)
         );
         if (i && i.phone !== user.phone) {
           u = i;
@@ -964,8 +958,8 @@ const Chat = () => {
       sender: user._id,
       user: id,
       users: ids,
-      type: chat.type,
-      chat_id: chat._id,
+      type: chat?.type,
+      chat_id: chat?._id,
       message: newMessage[0],
     });
     let res = await GiftedChat.append(messages, newMessage);
@@ -973,11 +967,11 @@ const Chat = () => {
     handleSendWS({
       sender: user._id,
       type: "new_message",
-      c_type: chat.type,
+      c_type: chat?.type,
       message: newMessage[0],
       user: id,
       users: ids,
-      chat_id: chat._id,
+      chat_id: chat?._id,
     });
 
     if (newMessage[0].video) {
@@ -989,8 +983,8 @@ const Chat = () => {
       update_chat({
         ...chat,
         events:
-          chat.events && chat.events.length
-            ? [...chat.events, newEvent]
+          chat?.events && chat?.events.length
+            ? [...chat?.events, newEvent]
             : [newEvent],
       })
         .then((res) => {
@@ -1002,7 +996,7 @@ const Chat = () => {
     setNewEvent({});
     setPhoto("");
     setPhotoLocal("");
-    dispatch(read(chat._id));
+    dispatch(read(chat?._id));
     setAudioFile("empty");
   };
 
@@ -1155,8 +1149,8 @@ const Chat = () => {
                   new_msg({
                     user: id,
                     users: ids,
-                    type: chat.type,
-                    chat_id: chat._id,
+                    type: chat?.type,
+                    chat_id: chat?._id,
                     oldId: messageToEdit._id,
                     message: {
                       ...messageToEdit,
@@ -1168,7 +1162,7 @@ const Chat = () => {
                     type: "new_message",
                     users: ids,
                     user: id,
-                    chat_id: chat._id,
+                    chat_id: chat?._id,
                     oldId: messageToEdit._id,
                     message: {
                       ...messageToEdit,
@@ -1322,7 +1316,7 @@ const Chat = () => {
       style={{
         backgroundColor: colors[theme].color2,
         width: "100%",
-        height: "100vh",
+        height: "100%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
@@ -1333,7 +1327,7 @@ const Chat = () => {
           navigation(-1);
         }}
         onPress2={() => {
-          if (chat.type !== "group") {
+          if (chat?.type !== "group") {
             setShowCall(true);
           }
         }}
@@ -1343,14 +1337,62 @@ const Chat = () => {
         onPress4={() => {
           setShowMenu(!showMenu);
         }}
-        text={chat.name}
+        text={chat?.name}
         screen={"Chat"}
       />
+
+{img !== null && (
+        <View
+          style={{
+            zIndex: 4,
+            position: 'absolute',
+            top: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: '#000000aa',
+
+          }}>
+          <TouchableOpacity
+            onPress={() => setImg(null)}
+            style={{
+              position: 'absolute',
+              top: 0,
+              right: 5,
+              zIndex: 5,
+              backgroundColor: '#ffffffaa',
+              borderRadius: 50,
+              width: 50,
+              height: 50,
+              alignItems:'center',
+              justifyContent:'center'
+            }}>
+            <RNImage
+                key="file"
+                source={require("../../icons/cross.png")}
+                resizeMode="cover"
+                style={{
+                  width: 32,
+                  height: 32,
+                  tintColor: '#222',
+                  alignSelf: "center",
+                }}
+              />
+          </TouchableOpacity>
+          <RNImage
+            style={{
+              width: Dimensions.get('window').width,
+              height: '100%',
+              resizeMode:'contain'
+            }}
+            source={{uri: img}}
+          />
+        </View>
+      )}
       <div
         style={{
           backgroundColor: colors[theme].color2,
           width: "100%",
-          height: "92vh",
+          height: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
@@ -1393,7 +1435,7 @@ const Chat = () => {
                 position: "absolute",
                 zIndex: 9999999,
                 right: 0,
-                top: 155,
+                top: 115,
                 height: "50%",
                 width: "40%",
               }}
@@ -1417,13 +1459,36 @@ const Chat = () => {
 
         <GiftedChat
           key={theme}
-          inputStyle={{ color: "#222", fontSize: 20 }}
+          textInputStyle={{ color: "#222", fontSize: 20 }}
           messages={messages}
-          renderMessageAudio={renderMessageAudio}
-          renderMessageVideo={renderMessageEvent}
+          renderMessage={renderMessage}
+          renderMessageText={(props) => (
+            <MessageItem
+              key={props.currentMessage._id}
+              isAdmin={isAdmin}
+              chat={chat}
+              {...props}
+              setImg={setImg}
+              eventCallback={(currentMessage, event) => {
+                let index = "";
+                if (event.id) {
+                  index = chat?.events.findIndex((e) => e.id == event.id);
+                } else {
+                  index = chat?.events.findIndex(
+                    (e) => e.startTime == event.startTime
+                  );
+                }
+                setShowSubEventListModal(true);
+                if (chat?.events[index]) {
+                  setEventLocal(chat?.events[index]);
+                } else {
+                  setEventLocal(event);
+                }
+              }}
+            />
+          )}
           onSend={(newMessage) => handleSend(newMessage)}
           user={user}
-          renderBubble={renderBubble}
           placeholder="Cообщение..."
           showUserAvatar
           alwaysShowSend={true}
@@ -1468,7 +1533,7 @@ const Chat = () => {
             );
           }}
           className="chatBubble"
-          renderLoading={!chat || renderLoading}
+          renderLoading={!chat && renderLoading}
         />
         <input id="selectImage" hidden type="file" onChange={processFile} />
       </div>

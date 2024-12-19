@@ -66,12 +66,12 @@
           <img
             src="/screen2.png"
             alt="BALU App Screenshot"
-            style="height: 500px; border-radius: 5px"
+            style="height: 50vh; border-radius: 5px"
           />
           <img
             src="/screen.png"
             alt="BALU App Screenshot"
-            style="height: 500px; border-radius: 5px"
+            style="height: 50vh; border-radius: 5px"
           />
         </div>
       </section>
@@ -425,13 +425,21 @@
         document.getElementsByClassName("main")[0].style.maxHeight = "100%";
         document.getElementsByClassName("main")[0].style.visibility = "visible";
         document.getElementsByClassName("app")[0].style.display = "none";
+        document.getElementsByTagName("body")[0].style.overflow="scroll";
+
         const els = document.getElementsByClassName(classname);
         els[0].scrollIntoView({ behavior: "smooth" });
       }
 
       function showApp() {
+        if(isWebVisiable){
+          isWebVisiable = false
+          return scrollToClass('hero')
+        }
+        isWebVisiable = true
         document.getElementsByClassName("main")[0].style.maxHeight = "0px";
         document.getElementsByClassName("main")[0].style.visibility = "hidden";
+        document.getElementsByTagName("body")[0].style.overflow="hidden";
         document.getElementsByClassName("app")[0].style.display = "block";
       }
 

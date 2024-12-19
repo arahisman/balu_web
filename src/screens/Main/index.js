@@ -481,7 +481,7 @@ function MainScreen() {
       style={{
         backgroundColor: colors[theme].color2,
         width: "100%",
-        minHeight: "100vh",
+        minHeight: "100%",
         alignItems: "center",
         display: "flex",
         flexDirection: "column",
@@ -520,8 +520,8 @@ function MainScreen() {
       <div
         style={{
           width: "100%",
-          minHeight: "80vh",
-          maxHeight: "95vh",
+          flex:1,
+          maxHeight:'100%',
           overflow: "scroll",
         }}
       >
@@ -570,7 +570,7 @@ function MainScreen() {
               style={{
                 position: "absolute",
                 right: 0,
-                top: 155,
+                top: 115,
                 height: "50%",
                 width: "40%",
                 zIndex: 99999,

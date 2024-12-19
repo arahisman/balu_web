@@ -12434,6 +12434,7 @@ __metadata:
     react-native-gifted-chat: 2.0.1
     react-native-user-avatar: ^1.0.8
     react-native-web: ^0.19.12
+    react-native-webrtc-web-shim: ^1.0.7
     react-redux: ^8.1.2
     react-router-dom: ^6.15.0
     react-scripts: 5.0.1
@@ -14688,6 +14689,18 @@ __metadata:
     react: ^18.0.0
     react-dom: ^18.0.0
   checksum: 676b1ba510c92e01dc69cb3102080f83976d2d209647323fb0a3a14113a455a6a506cf78d3e392c3fa33015135b61e2d6a3eed837a6876665064a6eb87516781
+  languageName: node
+  linkType: hard
+
+"react-native-webrtc-web-shim@npm:^1.0.7":
+  version: 1.0.7
+  resolution: "react-native-webrtc-web-shim@npm:1.0.7"
+  peerDependencies:
+    react: ">=16"
+    react-native: ">=0.6"
+    react-native-web: ">=0.14"
+    react-native-webrtc: "*"
+  checksum: 7c61c7b2de53def53c2f2ddc506a51c344910824ef3888b0dd2cbcae7179ccce2d77e5bacf917c3b9578cb56d153122fc1535e64d0fcee6c6a7551cbb3c6e391
   languageName: node
   linkType: hard
 

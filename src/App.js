@@ -7,6 +7,7 @@ import About from "./screens/About";
 import Main from "./screens/Main";
 import Group from "./screens/Group";
 import Chat from "./screens/Chat";
+import Call from "./screens/Call";
 import Sponsors from "./screens/Sponsors";
 import Profile from "./screens/Profile";
 import Settings from "./screens/Settings";
@@ -52,6 +53,7 @@ function App() {
           <Route path="/main" element={<Main />} />
           <Route path="/group" element={<Group />} />
           <Route path="/chat" element={<Chat />} />
+          <Route path="/call" element={<Call />} />
           <Route path="/sponsors" element={<Sponsors />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/settings" element={<Settings />} />

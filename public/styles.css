@@ -16,14 +16,27 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 10px 14px;
   background-color: #333;
   color: #fff;
 }
 
+header .links{
+  display: flex;
+  flex-direction: row;
+  gap:10px;
+}
+
+@media screen and (max-width:1024px) {
+  header nav{
+    display: none;
+    flex-direction: row !important;
+  }
+}
 
 #root{
-  height: 70vh !important;
+  height: calc(100vh - 55px) !important;
+  overflow-y:scroll;
 }
 
 header nav ul {
@@ -47,12 +60,11 @@ header .logo {
 }
 
 header .links a {
-  margin-left: 10px;
   color: #fff;
   text-decoration: none;
-  padding: 10px 20px;
+  padding: 7px 12px;
   border: 1px solid #fff;
-  border-radius: 5px;
+  border-radius: 3px;
   transition:
     background-color 0.3s,
     color 0.3s;
